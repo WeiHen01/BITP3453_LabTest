@@ -25,12 +25,12 @@ class SQFlite {
       await db.execute('''
         CREATE TABLE IF NOT EXISTS bmi (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          username TEXT,
+          fullname TEXT,
           weight DOUBLE,
           height DOUBLE,
           gender TEXT,
           bmi DOUBLE,
-          bmi_status TEXT
+          status TEXT
         )
       ''');
     });
