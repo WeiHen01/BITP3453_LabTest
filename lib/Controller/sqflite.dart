@@ -3,14 +3,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 
-class SQLiteController {
+class SQFlite {
   static const String _dbName = "bitp3453_bmi";
   Database? _db;
 
-  SQLiteController._(); // Private constructor
-  static final SQLiteController _instance = SQLiteController._();
+  SQFlite._(); // Private constructor
+  static final SQFlite _instance = SQFlite._();
 
-  factory SQLiteController() {
+  factory SQFlite() {
     return _instance;
   }
 
@@ -25,27 +25,28 @@ class SQLiteController {
       await db.execute('''
         CREATE TABLE IF NOT EXISTS bmi (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
-          fullname TEXT,
+          username TEXT,
           weight DOUBLE,
           height DOUBLE,
           gender TEXT,
           bmi DOUBLE,
-          status TEXT
+          bmi_status TEXT
         )
       ''');
     });
     return _db!;
   }
 
-  Future<int> insertBMIRecord(BMIController bmiController) async {
+  Future<int> insertBMIRecord(String name, double weight, double height,
+      String gender, double bmi, String status) async {
     final Database db = await database;
     final Map<String, dynamic> row = {
-      'fullname': bmiController.fullNameController.text,
-      'weight': double.parse(bmiController.weightController.text),
-      'height': double.parse(bmiController.heightController.text),
-      'gender': bmiController.gender,
-      'bmi': double.parse(bmiController.bmiResult),
-      'status': bmiController.bmiStatus,
+      'fullname': name,
+      'weight': weight,
+      'height': height,
+      'gender': gender,
+      'bmi': bmi,
+      'status': status,
     };
     return await db.insert('bmi', row);
   }
